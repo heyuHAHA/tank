@@ -3,7 +3,7 @@ package tank;
 import java.awt.*;
 
 public class Bullet {
-    private static final int speed = 10;
+    private static final int speed = 30;
     private int x, y;
     private Dir dir;
     private final int WIDTH = 10, HEIGHT = 10;

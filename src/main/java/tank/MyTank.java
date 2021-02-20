@@ -25,11 +25,29 @@ public class MyTank {
     }
 
     public void paint(Graphics g) {
-        Color c = g.getColor();
-        g.setColor(Color.BLUE);
-        g.fillRect(x,y,100,100);
-        g.setColor(c);
+        switch (dir) {
+            case LEFT:
+                g.drawImage(ResourceManager.tankL,x, y, null);
+                break;
+            case RIGHT:
+                g.drawImage(ResourceManager.tankR,x, y, null);
+                break;
+            case UP:
+                g.drawImage(ResourceManager.tankU,x, y, null);
+                break;
+            case DOWN:
+                g.drawImage(ResourceManager.tankD,x, y, null);
+                break;
+            default:break;
+
+        }
+
+        move();
+    }
+
+    public void move() {
         if (!moving) return;
+
         switch (dir) {
             case LEFT:
                 x -= speed;
