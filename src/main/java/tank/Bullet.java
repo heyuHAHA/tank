@@ -7,11 +7,14 @@ public class Bullet {
     private int x, y;
     private Dir dir;
     private final int WIDTH = 10, HEIGHT = 10;
+    private boolean live = true;
+    private TankFrame frame;
 
-    public Bullet(int x, int y, Dir dir) {
+    public Bullet(int x, int y, Dir dir,TankFrame frame) {
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.frame = frame;
     }
 
     public void paint(Graphics g) {
@@ -20,6 +23,9 @@ public class Bullet {
         g.fillOval(x,y,WIDTH,HEIGHT);
         g.setColor(c);
         move();
+        if( !live ) {
+            frame.removeBullet(this);
+        }
     }
 
     private void move() {
@@ -39,5 +45,7 @@ public class Bullet {
             default:
                 break;
         }
+        if (x < 0 || y < 0|| x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT)
+            live = false;
     }
 }

@@ -61,6 +61,6 @@ public class MyTank {
     }
 
     public void fire() {
-        tankFrame.addBullet(new Bullet (this.x, this.y,this.dir));
+        tankFrame.addBullet(new Bullet (this.x, this.y,this.dir,this.tankFrame));
     }
 }
