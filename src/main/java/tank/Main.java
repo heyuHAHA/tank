@@ -4,9 +4,9 @@ import java.awt.*;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-        Frame tankFrame = new TankFrame();
+        TankFrame tankFrame = new TankFrame();
         while (true) {
-            Thread.sleep(50);
+            Thread.sleep(100);
             tankFrame.repaint();
         }
     }
