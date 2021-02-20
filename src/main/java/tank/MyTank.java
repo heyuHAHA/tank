@@ -8,6 +8,16 @@ public class MyTank {
     private boolean moving = false;
     private final int speed = 10;
 
+    private TankFrame tankFrame;
+
+    public TankFrame getTankFrame() {
+        return tankFrame;
+    }
+
+    public void setTankFrame(TankFrame tankFrame) {
+        this.tankFrame = tankFrame;
+    }
+
     public MyTank(int x, int y) {
         super();
         this.x = x;
@@ -15,7 +25,10 @@ public class MyTank {
     }
 
     public void paint(Graphics g) {
+        Color c = g.getColor();
+        g.setColor(Color.BLUE);
         g.fillRect(x,y,100,100);
+        g.setColor(c);
         if (!moving) return;
         switch (dir) {
             case LEFT:
@@ -45,5 +58,9 @@ public class MyTank {
 
     public void setMoving(boolean moving) {
         this.moving = moving;
+    }
+
+    public void fire() {
+        tankFrame.addBullet(new Bullet (this.x, this.y,this.dir));
     }
 }
