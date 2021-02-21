@@ -18,10 +18,22 @@ public class Bullet {
     }
 
     public void paint(Graphics g) {
-        Color c = g.getColor();
-        g.setColor(Color.RED);
-        g.fillOval(x,y,WIDTH,HEIGHT);
-        g.setColor(c);
+        switch (dir) {
+            case LEFT:
+                g.drawImage(ResourceManager.bulletL,x, y, null);
+                break;
+            case RIGHT:
+                g.drawImage(ResourceManager.bulletR,x, y, null);
+                break;
+            case UP:
+                g.drawImage(ResourceManager.bulletU,x, y, null);
+                break;
+            case DOWN:
+                g.drawImage(ResourceManager.bulletD,x, y, null);
+                break;
+            default:break;
+
+        }
         move();
         if( !live ) {
             frame.removeBullet(this);
