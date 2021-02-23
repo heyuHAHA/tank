@@ -7,6 +7,9 @@ public class MyTank {
     private Dir dir = Dir.DOWN;
     private boolean moving = false;
     private final int speed = 10;
+    public final int width = ResourceManager.tankD.getWidth();
+    public final int height = ResourceManager.tankD.getHeight();
+    private boolean living = true;
 
     private TankFrame tankFrame;
 
@@ -18,13 +21,41 @@ public class MyTank {
         this.tankFrame = tankFrame;
     }
 
-    public MyTank(int x, int y) {
-        super();
+    public MyTank(int x, int y, Dir dir) {
+
         this.x = x;
+        this.y = y;
+        this.dir = dir;
+    }
+    public MyTank(int x, int y, Dir dir, TankFrame tankFrame) {
+
+        this.x = x;
+        this.y = y;
+        this.dir = dir;
+        this.tankFrame = tankFrame;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
         this.y = y;
     }
 
     public void paint(Graphics g) {
+        if(!living) {
+            //这里不能直接return,要移除tank
+            tankFrame.removeTank(this);
+        }
         switch (dir) {
             case LEFT:
                 g.drawImage(ResourceManager.tankL,x, y, null);
@@ -41,6 +72,7 @@ public class MyTank {
             default:break;
 
         }
+
 
         move();
     }
@@ -79,6 +111,12 @@ public class MyTank {
     }
 
     public void fire() {
-        tankFrame.addBullet(new Bullet (this.x, this.y,this.dir,this.tankFrame));
+        int x = this.x + width/2;
+        int y = this.y + height/2 - Bullet.HEIGHT/2;
+        tankFrame.addBullet(new Bullet (x, y,this.dir,this.tankFrame));
+    }
+
+    public void die() {
+        this.living = false;
     }
 }

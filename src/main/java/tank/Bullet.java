@@ -6,8 +6,9 @@ public class Bullet {
     private static final int speed = 30;
     private int x, y;
     private Dir dir;
-    private final int WIDTH = 10, HEIGHT = 10;
-    private boolean live = true;
+    public static final int WIDTH = ResourceManager.bulletD.getWidth();
+    public static final int HEIGHT = ResourceManager.bulletD.getHeight();
+    private boolean living = true;
     private TankFrame frame;
 
     public Bullet(int x, int y, Dir dir,TankFrame frame) {
@@ -18,6 +19,10 @@ public class Bullet {
     }
 
     public void paint(Graphics g) {
+        if( !living ) {
+            frame.removeBullet(this);
+            return;
+        }
         switch (dir) {
             case LEFT:
                 g.drawImage(ResourceManager.bulletL,x, y, null);
@@ -35,9 +40,7 @@ public class Bullet {
 
         }
         move();
-        if( !live ) {
-            frame.removeBullet(this);
-        }
+
     }
 
     private void move() {
@@ -58,6 +61,19 @@ public class Bullet {
                 break;
         }
         if (x < 0 || y < 0|| x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT)
-            live = false;
+            living = false;
+    }
+
+    public void collideWith(MyTank myTank) {
+        Rectangle rect =  new Rectangle(this.x, this.y, WIDTH,HEIGHT);
+        Rectangle rect2 = new Rectangle(myTank.getX(), myTank.getY(), myTank.width, myTank.height);
+        if (rect.intersects(rect2)) {
+            this.die();
+            myTank.die();
+        }
+    }
+
+    private void die() {
+        living = false;
     }
 }

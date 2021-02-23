@@ -12,12 +12,15 @@ import java.util.List;
 public class TankFrame extends Frame {
     private MyTank tank1;
     private List<Bullet> bulletList;
+    //敌方坦克
+    private List<MyTank> tanklist;
     private int speed = 10;
     public static final int GAME_WIDTH = 800;
     public static final int GAME_HEIGHT = 600;
     public TankFrame() {
-        tank1 = new MyTank(50,50);
+        tank1 = new MyTank(50,50,Dir.UP);
         bulletList = new ArrayList<Bullet>(50);
+        tanklist = new ArrayList<MyTank>();
         setSize(GAME_WIDTH,GAME_HEIGHT);
         setResizable(false);
         setTitle("tank war");
@@ -36,14 +39,22 @@ public class TankFrame extends Frame {
 
     public void addBullet(Bullet bullet) {
         bulletList.add(bullet);
-        if(bulletList.size() > 40) {
-            bulletList.clear();
-        }
+
     }
 
     public void removeBullet(Bullet bullet) {
         bulletList.remove(bullet);
     }
+
+    public void addTank(MyTank tank) {
+        tanklist.add(tank);
+    }
+
+    public void removeTank(MyTank tank) {
+        tanklist.remove(tank);
+    }
+
+
 
     //用双缓冲解决闪烁问题
     Image offScreenImage = null;
@@ -64,12 +75,26 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
-        g.drawString("子弹的数量 : " + bulletList.size(),100,100);
+        Color c = g.getColor();
+        g.setColor(Color.WHITE);
+        g.drawString("子弹的数量 : " + bulletList.size(),10,60);
+        g.drawString("坦克的数量 : " + tanklist.size(),10,80);
+        g.setColor(c);
         tank1.paint(g);
        for(int i = 0; i < bulletList.size(); i++) {
            bulletList.get(i).paint(g);
        }
 
+       for(int k = 0; k < tanklist.size(); k++) {
+               tanklist.get(k).paint(g);
+       }
+
+       //子弹碰撞检
+        for(int i = 0; i < bulletList.size(); i++) {
+            for (int j = 0; j < tanklist.size(); j++) {
+                bulletList.get(i).collideWith(tanklist.get(j));
+            }
+        }
     }
 
     private class MyKeyListener extends KeyAdapter {
