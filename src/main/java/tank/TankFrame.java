@@ -86,6 +86,7 @@ public class TankFrame extends Frame {
        }
 
        for(int k = 0; k < tanklist.size(); k++) {
+
                tanklist.get(k).paint(g);
        }
 
