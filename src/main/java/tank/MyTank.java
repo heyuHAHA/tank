@@ -55,8 +55,6 @@ public class MyTank {
         if(!living) {
             //这里不能直接return,要移除tank
             tankFrame.removeTank(this);
-            //加了这个就不会闪烁，不知道为什么。
-           // tankFrame.repaint();
             return;
         }
         switch (dir) {
